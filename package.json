@@ -1,0 +1,16 @@
+{
+    "name": "coingraphs",
+    "version": "0.0.1",
+    "license": "MIT",
+    "scripts": {
+      "dev": "parcel src/index.html",
+      "build": "parcel build src/index.html"
+    },
+    "devDependencies": {
+      "parcel": "*"
+    },
+    "dependencies": {
+      "chart.js": "*",
+      "chartjs-plugin-zoom": "*"
+    }
+  }
