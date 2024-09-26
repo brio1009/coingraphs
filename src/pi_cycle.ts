@@ -15,11 +15,11 @@ export interface PriceData {
     return
   }
 
-  btc_data.reverse()
+  btc_data.reverse()  // Just sort the initial file correctly.
 
-  const calculateMovingAverage = (data: PriceData[], window: number): PriceData[] => {
+  const calculateMovingAverage = (data: PriceData[], window: number, factor: number = 1): PriceData[] => {
     // Clone the input dates but set the price to undefined.
-    const out: PriceData[] = Object.values(data)
+    const out: PriceData[] = Object.values(structuredClone(data))
       .map(entry => { return { date: entry.date, price: undefined } });
     if (data.length < window || window <= 0) {
         return out;
@@ -28,17 +28,16 @@ export interface PriceData {
     for (let i = 0; i < window; i++) {
         sum += data[i].price ?? 0;
     }
-    out[window - 1].price = sum / window
+    out[window - 1].price = (sum / window) * factor
     for (let i = window; i < data.length; i++) {
-        sum += data[i].price ?? 0 - (data[i - window].price ?? 0);
-        out[i].price = sum / window
+        sum += (data[i].price ?? 0) - (data[i - window].price ?? 0)
+        out[i].price = (sum / window) * factor
     }
     return out;
-  };
+  }
 
-  const mva_350 = calculateMovingAverage(btc_data, 350)
+  const mva_350 = calculateMovingAverage(btc_data, 350, 2)
   const mva_111 = calculateMovingAverage(btc_data, 111)
-  console.log(mva_350)
 
 
   new Chart(chartElement as HTMLCanvasElement,
@@ -49,10 +48,11 @@ export interface PriceData {
         datasets: [
           {
             label: 'btc price',
-            data: btc_data
+            data: btc_data,
+            borderWidth: 1
           },
           {
-            label: '350 mva',
+            label: '350 mva x 2',
             data: mva_350
           },
           {
@@ -65,7 +65,8 @@ export interface PriceData {
         // Don't draw dots per data point.
         datasets: {
             line: {
-                pointRadius: 0
+                pointRadius: 0,
+                borderWidth: 2
             }
         },
         parsing: {
