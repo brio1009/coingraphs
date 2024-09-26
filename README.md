@@ -14,6 +14,8 @@ Open-source cryptocurrency graphs.
 - [ ] Unit for y axis
 - [ ] CSS Styling
 - [ ] Favicon
+- [ ] Tests
+- [ ] Codestyle
 
 ## Misc
 
