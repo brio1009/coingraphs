@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: npm install
       - run: npm run update-data ${AA_API_KEY}
       - name: Get current date
         id: date
