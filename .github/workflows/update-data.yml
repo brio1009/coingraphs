@@ -1,0 +1,20 @@
+name: Update prices
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 20
+  - run: npm update-data ${AA_API_KEY}
+  - name: Get current date
+    id: date
+    run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+  - uses: stefanzweifel/git-auto-commit-action@v5
+    with:
+      commit_message: Update to newest prices on ${{ steps.date.outputs.date }}
+      file_pattern: 'data/btc_newest.json'

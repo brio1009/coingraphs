@@ -6,13 +6,16 @@
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "lint": "npx @biomejs/biome check .",
-    "lint-fix": "npx @biomejs/biome check --write ."
+    "lint-fix": "npx @biomejs/biome check --write .",
+    "update-data": "node data/fetch_data.js"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
     "parcel": "*",
     "postcss": "*",
-    "tailwindcss": "*"
+    "tailwindcss": "*",
+    "request": "*",
+    "fs": "*"
   },
   "dependencies": {
     "chart.js": "*",

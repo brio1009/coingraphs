@@ -1,21 +1,23 @@
 import Chart from 'chart.js/auto'
+import btc_historical from '../data/btc_prices_until_2023.json'
+import btc_newest from '../data/btc_newest.json'
 import zoomPlugin from 'chartjs-plugin-zoom'
 Chart.register(zoomPlugin)
-
-import btc_data from '../data/btc_prices_until_2023.json'
 
 export interface PriceData {
   date: string
   price?: number
 }
-
 ;(async () => {
   const chartElement = document.getElementById('pi_cycle')
   if (chartElement == null) {
     return
   }
 
-  btc_data.reverse() // Just sort the initial file correctly.
+  // TODO: Just sort the initial files correctly.
+  btc_historical.reverse()
+  btc_newest.reverse()
+  const btc_data = [...btc_historical, ...btc_newest]
 
   const calculateMovingAverage = (
     data: PriceData[],
