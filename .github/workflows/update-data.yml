@@ -17,7 +17,7 @@ jobs:
       - run: npm run update-data ${{secrets.AA_API_KEY}}
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update to newest prices on ${{ steps.date.outputs.date }}
