@@ -12,10 +12,16 @@ Open-source cryptocurrency graphs.
 - [ ] Show all data on x-move
 - [ ] Legend to the right
 - [ ] Unit for y axis
-- [ ] CSS Styling
+- [x] CSS Styling
+  - [ ] Nice styling
 - [ ] Favicon
 - [ ] Tests
-- [ ] Codestyle
+  - [ ] CI
+- [x] Codestyle
+  - [ ] CI
+- [x] Update devcontainer with vscode extensions.
+  - [x] TailwindCSS
+  - [x] Biomejs
 
 ## Misc
 

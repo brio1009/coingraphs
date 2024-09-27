@@ -1,18 +1,20 @@
 {
-    "name": "coingraphs",
-    "version": "0.0.1",
-    "license": "MIT",
-    "scripts": {
-      "dev": "parcel src/index.html",
-      "build": "parcel build src/index.html"
-    },
-    "devDependencies": {
-      "parcel": "*",
-      "tailwindcss": "*",
-      "postcss": "*"
-    },
-    "dependencies": {
-      "chart.js": "*",
-      "chartjs-plugin-zoom": "*"
-    }
+  "name": "coingraphs",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "lint": "npx @biomejs/biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2",
+    "parcel": "*",
+    "postcss": "*",
+    "tailwindcss": "*"
+  },
+  "dependencies": {
+    "chart.js": "*",
+    "chartjs-plugin-zoom": "*"
   }
+}
