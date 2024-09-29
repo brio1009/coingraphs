@@ -3,17 +3,13 @@
 <br />
 <strong>CoinGraphs</strong>
 </h1>
-<div align="center">Daily updated, open-source cryptocurrency graphs.
+<div align="center">Daily updated, open-source cryptocurrency indicator graphs.
 </div>
 
 ## Roadmap
 - [ ] GitHub Pages
-- [ ] Show all data on x-move
-- [ ] Legend to the right
 - [ ] Unit for y axis
-- [x] CSS Styling
-  - [ ] Nice styling
-- [ ] Favicon
+- [ ] Optimize light mode
 - [ ] Tests
   - [ ] CI
 - [x] Codestyle

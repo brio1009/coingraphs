@@ -35,7 +35,7 @@ request.get(
         if (date.startsWith('2024')) {
           out.push({
             date: date,
-            price: +getProperty(timeData[date], '4. close'),
+            value: +getProperty(timeData[date], '4. close'),
           })
         }
       }
