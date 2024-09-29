@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "build": "parcel build --public-url ./  src/index.html",
     "lint": "npx @biomejs/biome check .",
     "lint-fix": "npx @biomejs/biome check --write .",
     "update-data": "node data/fetch_data.js"
