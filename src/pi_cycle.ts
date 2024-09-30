@@ -3,9 +3,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 import btc_historical from '../data/btc_prices_until_2023.json'
 import btc_newest from '../data/btc_newest.json'
 import colors from 'tailwindcss/colors'
-import zoomPlugin from 'chartjs-plugin-zoom'
 
-Chart.register(zoomPlugin)
 Chart.register(annotationPlugin)
 Chart.defaults.color = colors.slate[400]
 
@@ -91,6 +89,8 @@ export interface DateData {
       ],
     },
     options: {
+      normalized: true,
+      animation: false,
       // Don't draw dots per data point.
       datasets: {
         line: {
@@ -154,20 +154,6 @@ export interface DateData {
               backgroundColor: 'rgba(0, 255, 0, 0.15)',
               borderWidth: 0,
             },
-          },
-        },
-        zoom: {
-          limits: {
-            y1: { min: 'original', max: 'original', minRange: 4 },
-          },
-          zoom: {
-            wheel: {
-              enabled: false,
-            },
-            pinch: {
-              enabled: false,
-            },
-            mode: 'xy',
           },
         },
       },
