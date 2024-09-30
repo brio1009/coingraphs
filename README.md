@@ -13,7 +13,6 @@
 
 
 ## Roadmap
-- [ ] GitHub Pages
 - [ ] Unit for y axis
 - [ ] Optimize light mode
 - [ ] Tests
