@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="17.75877mm"
-   height="17.528mm"
-   viewBox="0 0 17.758771 17.528"
+   width="18.730061mm"
+   height="18.469519mm"
+   viewBox="0 0 18.730062 18.469519"
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="coingraph_v1.svg"
+   sodipodi:docname="coingraphs_logo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -26,8 +26,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="6.5714108"
-     inkscape:cx="4.9456656"
-     inkscape:cy="24.956589"
+     inkscape:cx="11.336987"
+     inkscape:cy="26.782681"
      inkscape:window-width="1440"
      inkscape:window-height="890"
      inkscape:window-x="-6"
@@ -39,21 +39,21 @@
     <linearGradient
        id="gradient-1-0"
        gradientUnits="userSpaceOnUse"
-       x1="31.92"
-       y1="18.495001"
-       x2="31.92"
-       y2="45.317001"
+       x1="56.876591"
+       y1="26.712414"
+       x2="5.2894926"
+       y2="49.882233"
        xlink:href="#gradient-1" />
     <linearGradient
        id="gradient-1"
        bx:pinned="true">
       <stop
-         offset="0.296"
+         offset="0.39747635"
          style="stop-color: rgb(0, 157, 7);"
          id="stop1" />
       <stop
          offset="1"
-         style=""
+         style="stop-color:#ffffff;stop-opacity:1;"
          id="stop2" />
     </linearGradient>
   </defs>
@@ -61,7 +61,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-143.02786,-159.52586)">
+     transform="translate(-142.54245,-159.05534)">
     <g
        transform="matrix(0.30378248,0,0,0.30378248,142.21456,158.97347)"
        id="g2">
@@ -70,18 +70,18 @@
          d="M 46.103,27.444 C 46.74,23.186 43.498,20.897 39.065,19.37 l 1.438,-5.768 -3.511,-0.875 -1.4,5.616 c -0.923,-0.23 -1.871,-0.447 -2.813,-0.662 l 1.41,-5.653 -3.509,-0.875 -1.439,5.766 c -0.764,-0.174 -1.514,-0.346 -2.242,-0.527 l 0.004,-0.018 -4.842,-1.209 -0.934,3.75 c 0,0 2.605,0.597 2.55,0.634 1.422,0.355 1.679,1.296 1.636,2.042 l -1.638,6.571 c 0.098,0.025 0.225,0.061 0.365,0.117 -0.117,-0.029 -0.242,-0.061 -0.371,-0.092 l -2.296,9.205 c -0.174,0.432 -0.615,1.08 -1.609,0.834 0.035,0.051 -2.552,-0.637 -2.552,-0.637 l -1.743,4.019 4.569,1.139 c 0.85,0.213 1.683,0.436 2.503,0.646 l -1.453,5.834 3.507,0.875 1.439,-5.772 c 0.958,0.26 1.888,0.5 2.798,0.726 l -1.434,5.745 3.511,0.875 1.453,-5.823 c 5.987,1.133 10.489,0.676 12.384,-4.739 1.527,-4.36 -0.076,-6.875 -3.226,-8.515 2.294,-0.529 4.022,-2.038 4.483,-5.155 z m -8.022,11.249 c -1.085,4.36 -8.426,2.003 -10.806,1.412 l 1.928,-7.729 c 2.38,0.594 10.012,1.77 8.878,6.317 z m 1.086,-11.312 c -0.99,3.966 -7.1,1.951 -9.082,1.457 l 1.748,-7.01 c 1.982,0.494 8.365,1.416 7.334,5.553 z"
          id="path2" />
     </g>
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 159.52252,164.69883 c -2.76983,-5.93994 -10.93107,-6.65404 -14.69027,-1.28548 -1.13827,1.62584 -1.67298,3.59818 -1.5116,5.5764"
+       id="path4" />
     <polyline
-       style="fill:none;stroke:url(#gradient-1-0);stroke-width:2px;stroke-linecap:round"
+       style="fill:none;stroke:url(#gradient-1-0);stroke-width:5.66929;stroke-linecap:round;stroke-dasharray:none"
        points="3.296 45.317 20.473 32.118 30.009 37.549 60.545 18.495"
        id="polyline2"
        transform="matrix(0.26458333,0,0,0.26458333,143.46743,159.85434)" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167px;stroke-linecap:round"
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 144.29244,171.88136 c 2.76983,5.93994 10.93107,6.65404 14.69027,1.28548 1.13827,-1.62584 1.67298,-3.59818 1.5116,-5.5764"
        id="path3" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167px;stroke-linecap:round"
-       d="m 159.52252,164.69883 c -2.76983,-5.93994 -10.93107,-6.65404 -14.69027,-1.28548 -1.13827,1.62584 -1.67298,3.59818 -1.5116,5.5764"
-       id="path4" />
   </g>
 </svg>
