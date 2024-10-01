@@ -16,10 +16,6 @@ export interface DateData {
   if (chartElement == null) {
     return
   }
-
-  // TODO: Just sort the initial files correctly.
-  btc_historical.reverse()
-  btc_newest.reverse()
   const btc_data = [...btc_historical, ...btc_newest]
 
   const calculateMovingAverage = (

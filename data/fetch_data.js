@@ -1,5 +1,5 @@
-const request = require('request')
-const fs = require('fs')
+import fs from 'fs'
+import ky from 'ky'
 
 if (process.argv.length === 2) {
   console.error('Please provide a AlphaVantage API key.')
@@ -15,32 +15,24 @@ const getProperty = (data, name) => {
   }
   throw new Error(`Property ${name} not found.`)
 }
-
-request.get(
-  {
-    url: url,
-    json: true,
-    headers: { 'User-Agent': 'request' },
-  },
-  (err, res, data) => {
-    if (err) {
-      console.error('Error:', err)
-    } else if (res.statusCode !== 200) {
-      console.error('Status:', res.statusCode)
-    } else {
-      const timeData = getProperty(data, 'Time Series (Digital Currency Daily)')
-      // Iterate over the dates, just get the ones starting from 2024 and get the closing price.
-      const out = []
-      for (date in timeData) {
-        if (date.startsWith('2024')) {
-          out.push({
-            date: date,
-            value: +getProperty(timeData[date], '4. close'),
-          })
-        }
+;(async () => {
+  try {
+    const data = await ky(url).json()
+    const timeData = getProperty(data, 'Time Series (Digital Currency Daily)')
+    // Iterate over the dates, just get the ones starting from 2024 and get the closing price.
+    const out = []
+    for (const [date, prices] of Object.entries(timeData)) {
+      if (date.startsWith('2024')) {
+        out.push({
+          date: date,
+          value: +getProperty(prices, '4. close'),
+        })
       }
-      const json = JSON.stringify(out)
-      fs.writeFile('data/btc_newest.json', json, 'utf8', () => {})
     }
-  },
-)
+    out.reverse() // Ensure newest is last.
+    const json = JSON.stringify(out)
+    fs.writeFile('data/btc_newest.json', json, 'utf8', () => {})
+  } catch (error) {
+    console.error(`Error while fetching data: ${error}`)
+  }
+})()

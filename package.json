@@ -2,6 +2,7 @@
   "name": "coingraphs",
   "version": "0.0.1",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "parcel src/index.html",
     "build": "parcel build --public-url ./  src/index.html",
@@ -10,17 +11,16 @@
     "update-data": "node data/fetch_data.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.2",
+    "@biomejs/biome": "*",
     "fs": "*",
+    "ky": "*",
     "parcel": "*",
     "postcss": "*",
-    "process": "^0.11.10",
-    "request": "*",
+    "process": "*",
     "tailwindcss": "*"
   },
   "dependencies": {
     "chart.js": "*",
-    "chartjs-plugin-zoom": "*",
     "chartjs-plugin-annotation": "*"
   }
 }
