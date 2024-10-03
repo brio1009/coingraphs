@@ -13,7 +13,10 @@
 
 
 ## Roadmap
+- [ ] add unified charts.ts
+- [ ] Graph colors
 - [ ] Unit for y axis
+- [ ] y axis names
 - [ ] Optimize light mode
 - [ ] Tests
   - [ ] CI

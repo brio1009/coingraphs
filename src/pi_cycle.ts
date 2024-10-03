@@ -1,4 +1,5 @@
 import Chart from 'chart.js/auto'
+import { Utils } from './utils'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import btc_historical from '../data/btc_prices_until_2023.json'
 import btc_newest from '../data/btc_newest.json'
@@ -6,11 +7,6 @@ import colors from 'tailwindcss/colors'
 
 Chart.register(annotationPlugin)
 Chart.defaults.color = colors.slate[400]
-
-export interface DateData {
-  date: string
-  value?: number
-}
 ;(async () => {
   const chartElement = document.getElementById('pi_cycle')
   if (chartElement == null) {
@@ -18,34 +14,8 @@ export interface DateData {
   }
   const btc_data = [...btc_historical, ...btc_newest]
 
-  const calculateMovingAverage = (
-    data: DateData[],
-    window: number,
-    factor = 1,
-  ): DateData[] => {
-    // Clone the input dates but set the price to undefined.
-    const out: DateData[] = Object.values(structuredClone(data)).map(
-      (entry) => {
-        return { date: entry.date, price: undefined }
-      },
-    )
-    if (data.length < window || window <= 0) {
-      return out
-    }
-    let sum = 0
-    for (let i = 0; i < window; i++) {
-      sum += data[i].value ?? 0
-    }
-    out[window - 1].value = (sum / window) * factor
-    for (let i = window; i < data.length; i++) {
-      sum += (data[i].value ?? 0) - (data[i - window].value ?? 0)
-      out[i].value = (sum / window) * factor
-    }
-    return out
-  }
-
-  const dma350x2 = calculateMovingAverage(btc_data, 350, 2)
-  const dma111 = calculateMovingAverage(btc_data, 111)
+  const dma350x2 = Utils.calculateMovingAverage(btc_data, 350, 2)
+  const dma111 = Utils.calculateMovingAverage(btc_data, 111)
   const indicator = dma350x2.map((mva_350, index) => {
     if (dma111[index].value === undefined || mva_350.value === undefined) {
       return {
@@ -62,7 +32,6 @@ export interface DateData {
   new Chart(chartElement as HTMLCanvasElement, {
     type: 'line',
     data: {
-      labels: btc_data.map((row) => row.date),
       datasets: [
         {
           label: 'USD/BTC',
