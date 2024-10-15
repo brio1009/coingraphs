@@ -130,21 +130,24 @@ Chart.defaults.color = colors.slate[400]
   })
 
   // Set current info.
-  const infoBox = document.getElementById('mayer_current_info')
-  if (infoBox != null) {
-    const lastEntry = mayer_multiple[mayer_multiple.length - 1]
-    if (lastEntry.value !== undefined) {
-      let text = `On ${lastEntry.date}: `
-      if (lastEntry.value < 0.5) {
-        text += 'Oversold'
-      } else if (lastEntry.value < 1.0) {
-        text += 'Bearish'
-      } else if (lastEntry.value < 2.0) {
-        text += 'Bullish'
-      } else {
-        text += 'Overbought'
+  for (const infoBox of document.getElementsByClassName(
+    'mayer-multiple-info',
+  )) {
+    if (infoBox != null) {
+      const lastEntry = mayer_multiple[mayer_multiple.length - 1]
+      if (lastEntry.value !== undefined) {
+        let text = `On ${lastEntry.date}: `
+        if (lastEntry.value < 0.5) {
+          text += 'Oversold'
+        } else if (lastEntry.value < 1.0) {
+          text += 'Bearish'
+        } else if (lastEntry.value < 2.0) {
+          text += 'Bullish'
+        } else {
+          text += 'Overbought'
+        }
+        infoBox.innerText = text
       }
-      infoBox.innerText = text
     }
   }
 })()
