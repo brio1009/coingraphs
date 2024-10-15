@@ -14,6 +14,9 @@ Chart.defaults.color = colors.slate[400]
   }
   const btc_data = [...btc_historical, ...btc_newest]
 
+  // Set date.
+  Utils.setElementText('date', btc_data[btc_data.length - 1].date ?? 'unknown')
+
   const dma200 = Utils.calculateMovingAverage(btc_data, 200)
   const mayer_multiple = dma200.map((val, index) => {
     if (btc_data[index].value === undefined || val.value === undefined) {
@@ -130,24 +133,21 @@ Chart.defaults.color = colors.slate[400]
   })
 
   // Set current info.
-  for (const infoBox of document.getElementsByClassName(
-    'mayer-multiple-info',
-  )) {
-    if (infoBox != null) {
-      const lastEntry = mayer_multiple[mayer_multiple.length - 1]
-      if (lastEntry.value !== undefined) {
-        let text = `On ${lastEntry.date}: `
-        if (lastEntry.value < 0.5) {
-          text += 'Oversold'
-        } else if (lastEntry.value < 1.0) {
-          text += 'Bearish'
-        } else if (lastEntry.value < 2.0) {
-          text += 'Bullish'
-        } else {
-          text += 'Overbought'
-        }
-        infoBox.innerText = text
+  Utils.setElementText('mayer-multiple-info', () => {
+    const lastEntry = mayer_multiple[mayer_multiple.length - 1]
+    if (lastEntry.value !== undefined) {
+      let text = `Mayer Multiple ${Utils.toTwoDecimals(lastEntry.value)} (`
+      if (lastEntry.value < 0.5) {
+        text += 'Oversold'
+      } else if (lastEntry.value < 1.0) {
+        text += 'Bearish'
+      } else if (lastEntry.value < 2.0) {
+        text += 'Bullish'
+      } else {
+        text += 'Overbought'
       }
+      return `${text})`
     }
-  }
+    return ''
+  })
 })()

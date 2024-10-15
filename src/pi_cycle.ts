@@ -29,6 +29,14 @@ Chart.defaults.color = colors.slate[400]
     }
   })
 
+  Utils.setElementText('pi-cycle-info', () => {
+    const val = indicator[indicator.length - 1].value
+    if (val === undefined) {
+      return 'unknown'
+    }
+    return `Indicator: ${Utils.toTwoDecimals(val)}`
+  })
+
   new Chart(chartElement as HTMLCanvasElement, {
     type: 'line',
     data: {

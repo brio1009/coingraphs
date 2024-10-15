@@ -17,7 +17,9 @@
 - [ ] Graph colors
 - [ ] Unit for y axis
 - [ ] y axis names
-- [ ] Optimize light mode
+- [ ] Optimize css
+  - [ ] light mode
+  - [ ] hover color for links
 - [ ] Tests
   - [ ] CI
 - [x] Codestyle

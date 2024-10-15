@@ -32,4 +32,21 @@ export namespace Utils {
     }
     return out
   }
+
+  export type stringFunction = () => string
+  export const setElementText = (
+    className: string,
+    text: string | stringFunction,
+  ): void => {
+    for (const infoBox of document.getElementsByClassName(className)) {
+      const container = infoBox as HTMLElement
+      if (container != null) {
+        container.innerText = typeof text === 'string' ? text : text()
+      }
+    }
+  }
+
+  export const toTwoDecimals = (val: number): string => {
+    return (Math.round(val * 100) / 100).toFixed(2)
+  }
 }
