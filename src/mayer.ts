@@ -1,9 +1,9 @@
 import Chart from 'chart.js/auto'
-import { Utils } from './utils'
 import annotationPlugin from 'chartjs-plugin-annotation'
-import btc_historical from '../data/btc_prices_until_2023.json'
-import btc_newest from '../data/btc_newest.json'
 import colors from 'tailwindcss/colors'
+import btc_newest from '../data/btc_newest.json'
+import btc_historical from '../data/btc_prices_until_2023.json'
+import { Utils } from './utils'
 
 Chart.register(annotationPlugin)
 Chart.defaults.color = colors.slate[400]
