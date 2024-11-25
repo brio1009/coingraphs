@@ -17,7 +17,8 @@
     "parcel": "*",
     "postcss": "*",
     "process": "*",
-    "tailwindcss": "*"
+    "tailwindcss": "*",
+    "svgo": "*"
   },
   "dependencies": {
     "chart.js": "*",
