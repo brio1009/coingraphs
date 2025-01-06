@@ -26,5 +26,5 @@
   - [ ] CI
 
 ## Attribution
-Historical data is taken [this Kaggle dataset](https://www.kaggle.com/datasets/shiivvvaam/bitcoin-historical-data).  
+Historical data is taken from [this Kaggle dataset](https://www.kaggle.com/datasets/shiivvvaam/bitcoin-historical-data) and from [AlphaVantage](https://alphavantage.co).  
 Daily data is automatically fetched from [AlphaVantage](https://alphavantage.co).

@@ -19,10 +19,10 @@ const getProperty = (data, name) => {
   try {
     const data = await ky(url).json()
     const timeData = getProperty(data, 'Time Series (Digital Currency Daily)')
-    // Iterate over the dates, just get the ones starting from 2024 and get the closing price.
+    // Iterate over the dates, just get the ones starting from 2025 and get the closing price.
     const out = []
     for (const [date, prices] of Object.entries(timeData)) {
-      if (date.startsWith('2024')) {
+      if (date.startsWith('2025')) {
         out.push({
           date: date,
           value: +getProperty(prices, '4. close'),
