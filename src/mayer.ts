@@ -1,14 +1,13 @@
 import Chart from 'chart.js/auto'
-import { Utils } from './utils'
 import annotationPlugin from 'chartjs-plugin-annotation'
-import btc_historical from '../data/btc_prices_until_2024.json'
 import btc_newest from '../data/btc_newest.json'
+import btc_historical from '../data/btc_prices_until_2024.json'
+import { Utils } from './utils'
 
 Chart.register(annotationPlugin)
 
 const styles = getComputedStyle(document.documentElement)
-Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
-
+Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
 ;(async () => {
   const chartElement = document.getElementById('mayer')
   if (chartElement == null) {

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 a {
   @apply underline dark:text-slate-200 text-slate-800;
