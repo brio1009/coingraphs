@@ -1,12 +1,14 @@
 import Chart from 'chart.js/auto'
-import annotationPlugin from 'chartjs-plugin-annotation'
-import colors from 'tailwindcss/colors'
-import btc_newest from '../data/btc_newest.json'
-import btc_historical from '../data/btc_prices_until_2024.json'
 import { Utils } from './utils'
+import annotationPlugin from 'chartjs-plugin-annotation'
+import btc_historical from '../data/btc_prices_until_2024.json'
+import btc_newest from '../data/btc_newest.json'
 
 Chart.register(annotationPlugin)
-Chart.defaults.color = colors.slate[400]
+
+const styles = getComputedStyle(document.documentElement)
+Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
+
 ;(async () => {
   const chartElement = document.getElementById('pi_cycle')
   if (chartElement == null) {
