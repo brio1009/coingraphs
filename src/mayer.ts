@@ -1,14 +1,13 @@
 import Chart from 'chart.js/auto'
-import { Utils } from './utils'
 import annotationPlugin from 'chartjs-plugin-annotation'
-import btc_historical from '../data/btc_prices_until_2024.json'
 import btc_newest from '../data/btc_newest.json'
+import btc_historical from '../data/btc_prices_until_2024.json'
+import { Utils } from './utils'
 
 Chart.register(annotationPlugin)
 
 const styles = getComputedStyle(document.documentElement)
-Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
-
+Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
 ;(async () => {
   const chartElement = document.getElementById('mayer')
   if (chartElement == null) {
@@ -52,7 +51,7 @@ Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
     }
   })
 
-  new Chart(chartElement as HTMLCanvasElement, {
+  const chart = new Chart(chartElement as HTMLCanvasElement, {
     type: 'line',
     data: {
       datasets: [
@@ -108,6 +107,13 @@ Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
         yAxisKey: 'value',
       },
       scales: {
+        x: {
+          type: 'time',
+          time: {
+            parser: 'YYYY-MM-DD',
+            tooltipFormat: 'YYYY-MM-DD',
+          },
+        },
         y: {
           type: 'logarithmic',
           display: true,
@@ -132,7 +138,29 @@ Chart.defaults.color = styles.getPropertyValue("--color-slate-400")
         },
       },
     },
-  })
+  }) as unknown as Chart
+
+  // React to button clicks.
+  document
+    ?.getElementById('mayer-90d')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '90d'),
+    )
+  document
+    ?.getElementById('mayer-1y')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '1y'),
+    )
+  document
+    ?.getElementById('mayer-5y')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '5y'),
+    )
+  document
+    ?.getElementById('mayer-all')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, 'all'),
+    )
 
   // Set current info.
   Utils.setElementText('mayer-multiple-info', () => {

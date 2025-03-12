@@ -1,3 +1,5 @@
+import type { Chart } from 'chart.js'
+
 /**
  * The model holding a date and a value for the cart.
  */
@@ -48,5 +50,34 @@ export namespace Utils {
 
   export const toTwoDecimals = (val: number): string => {
     return (Math.round(val * 100) / 100).toFixed(2)
+  }
+
+  export const updateChartRange = (
+    chart: Chart,
+    data: DateData[],
+    range: '90d' | '1y' | '5y' | 'all',
+  ) => {
+    if (range === 'all') {
+      chart.options.scales.x.min = undefined
+      chart.options.scales.x.max = undefined
+      chart.update()
+      return
+    }
+
+    const endDate = new Date(data[data.length - 1].date)
+    let startDate = new Date(data[0].date)
+    if (range === '90d') {
+      startDate = new Date(endDate)
+      startDate.setDate(endDate.getDate() - 90)
+    } else if (range === '1y') {
+      startDate = new Date(endDate)
+      startDate.setFullYear(endDate.getFullYear() - 1)
+    } else if (range === '5y') {
+      startDate = new Date(endDate)
+      startDate.setFullYear(endDate.getFullYear() - 5)
+    }
+    chart.options.scales.x.min = startDate
+    chart.options.scales.x.max = endDate
+    chart.update()
   }
 }
