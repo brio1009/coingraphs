@@ -1,3 +1,5 @@
+import 'chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm'
+
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import btc_newest from '../data/btc_newest.json'
@@ -38,7 +40,7 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
     return `Indicator: ${Utils.toTwoDecimals(val)}`
   })
 
-  new Chart(chartElement as HTMLCanvasElement, {
+  const chart = new Chart(chartElement as HTMLCanvasElement, {
     type: 'line',
     data: {
       datasets: [
@@ -82,6 +84,13 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         yAxisKey: 'value',
       },
       scales: {
+        x: {
+          type: 'time',
+          time: {
+            parser: 'YYYY-MM-DD',
+            tooltipFormat: 'YYYY-MM-DD',
+          },
+        },
         y: {
           type: 'logarithmic',
           display: true,
@@ -132,5 +141,27 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         },
       },
     },
-  })
+  }) as unknown as Chart
+
+  // React to button clicks.
+  document
+    ?.getElementById('pi-cycle-90d')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '90d'),
+    )
+  document
+    ?.getElementById('pi-cycle-1y')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '1y'),
+    )
+  document
+    ?.getElementById('pi-cycle-5y')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, '5y'),
+    )
+  document
+    ?.getElementById('pi-cycle-all')
+    ?.addEventListener('click', () =>
+      Utils.updateChartRange(chart, btc_data, 'all'),
+    )
 })()
