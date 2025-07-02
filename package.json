@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "*",
-    "@tailwindcss/postcss": "^4.1.6",
+    "@tailwindcss/postcss": "^4.1.11",
     "fs": "*",
     "ky": "*",
     "parcel": "*",
