@@ -19,7 +19,7 @@
     "postcss": "*",
     "process": "*",
     "svgo": "*",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.18"
   },
   "dependencies": {
     "chart.js": "*",
