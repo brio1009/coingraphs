@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import btc_newest from '../data/btc_newest.json'
-import btc_historical from '../data/btc_prices_until_2024.json'
+import btc_historical from '../data/btc_prices_to_2025.json'
 import { Utils } from './utils'
 
 Chart.register(annotationPlugin)

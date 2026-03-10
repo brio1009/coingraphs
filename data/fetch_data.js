@@ -22,7 +22,7 @@ const getProperty = (data, name) => {
     // Iterate over the dates, just get the ones starting from 2025 and get the closing price.
     const out = []
     for (const [date, prices] of Object.entries(timeData)) {
-      if (date.startsWith('2025')) {
+      if (date.startsWith('2026')) {
         out.push({
           date: date,
           value: +getProperty(prices, '4. close'),
