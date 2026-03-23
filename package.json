@@ -12,19 +12,19 @@
   },
   "devDependencies": {
     "@biomejs/biome": "*",
-    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "fs": "*",
     "ky": "*",
     "parcel": "*",
     "postcss": "*",
     "process": "*",
     "svgo": "*",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.2"
   },
   "dependencies": {
     "chart.js": "*",
     "chartjs-adapter-dayjs-4": "^1.0.4",
     "chartjs-plugin-annotation": "*",
-    "dayjs": "^1.11.19"
+    "dayjs": "^1.11.20"
   }
 }
