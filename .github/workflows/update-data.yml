@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
       - run: npm install
       - run: npm run update-data ${{secrets.AA_API_KEY}}
       - name: Get current date
