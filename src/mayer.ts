@@ -1,3 +1,5 @@
+import 'chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm'
+
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import btc_newest from '../data/btc_newest.json'
@@ -13,43 +15,24 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
   if (chartElement == null) {
     return
   }
-  const btc_data = [...btc_historical, ...btc_newest]
+  const btc_data = Utils.parseData([...btc_historical, ...btc_newest])
 
   // Set date.
-  Utils.setElementText('date', btc_data[btc_data.length - 1].date ?? 'unknown')
+  Utils.setElementText(
+    'date',
+    new Date(btc_data[btc_data.length - 1].x).toISOString().slice(0, 10),
+  )
 
   const dma200 = Utils.calculateMovingAverage(btc_data, 200)
-  const mayer_multiple = dma200.map((val, index) => {
-    if (btc_data[index].value === undefined || val.value === undefined) {
-      return {
-        date: val.date,
-        value: undefined,
-      }
-    }
-    return {
-      date: val.date,
-      value: btc_data[index].value / val.value,
-    }
-  })
-  const mayer_band_1 = dma200.map((val) => {
-    return {
-      date: val.date,
-      value: val.value === undefined ? undefined : 0.5 * val.value,
-    }
-  })
+  const offset = btc_data.length - dma200.length
+  const mayer_multiple = dma200.map((val, i) => ({
+    x: val.x,
+    y: btc_data[i + offset].y / val.y,
+  }))
+  const mayer_band_1 = dma200.map((val) => ({ x: val.x, y: 0.5 * val.y }))
   const mayer_band_2 = dma200
-  const mayer_band_3 = dma200.map((val) => {
-    return {
-      date: val.date,
-      value: val.value === undefined ? undefined : 2.0 * val.value,
-    }
-  })
-  const mayer_band_4 = dma200.map((val) => {
-    return {
-      date: val.date,
-      value: val.value === undefined ? undefined : 4.0 * val.value,
-    }
-  })
+  const mayer_band_3 = dma200.map((val) => ({ x: val.x, y: 2.0 * val.y }))
+  const mayer_band_4 = dma200.map((val) => ({ x: val.x, y: 4.0 * val.y }))
 
   const chart = new Chart(chartElement as HTMLCanvasElement, {
     type: 'line',
@@ -102,15 +85,11 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         mode: 'index',
         intersect: false,
       },
-      parsing: {
-        xAxisKey: 'date',
-        yAxisKey: 'value',
-      },
+      parsing: false,
       scales: {
         x: {
           type: 'time',
           time: {
-            parser: 'YYYY-MM-DD',
             tooltipFormat: 'YYYY-MM-DD',
           },
         },
@@ -131,7 +110,11 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         },
       },
       plugins: {
-        // Show tooltip for nearest x-value for all grpahs independent of y-value of mouse.
+        decimation: {
+          enabled: true,
+          algorithm: 'lttb',
+        },
+        // Show tooltip for nearest x-value for all graphs independent of y-value of mouse.
         tooltip: {
           mode: 'index',
           intersect: false,
@@ -165,19 +148,16 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
   // Set current info.
   Utils.setElementText('mayer-multiple-info', () => {
     const lastEntry = mayer_multiple[mayer_multiple.length - 1]
-    if (lastEntry.value !== undefined) {
-      let text = `Mayer Multiple ${Utils.toTwoDecimals(lastEntry.value)} (`
-      if (lastEntry.value < 0.5) {
-        text += 'Oversold'
-      } else if (lastEntry.value < 1.0) {
-        text += 'Bearish'
-      } else if (lastEntry.value < 2.0) {
-        text += 'Bullish'
-      } else {
-        text += 'Overbought'
-      }
-      return `${text})`
+    let text = `Mayer Multiple ${Utils.toTwoDecimals(lastEntry.y)} (`
+    if (lastEntry.y < 0.5) {
+      text += 'Oversold'
+    } else if (lastEntry.y < 1.0) {
+      text += 'Bearish'
+    } else if (lastEntry.y < 2.0) {
+      text += 'Bullish'
+    } else {
+      text += 'Overbought'
     }
-    return ''
+    return `${text})`
   })
 })()

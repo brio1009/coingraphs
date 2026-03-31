@@ -15,28 +15,18 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
   if (chartElement == null) {
     return
   }
-  const btc_data = [...btc_historical, ...btc_newest]
+  const btc_data = Utils.parseData([...btc_historical, ...btc_newest])
 
   const dma350x2 = Utils.calculateMovingAverage(btc_data, 350, 2)
   const dma111 = Utils.calculateMovingAverage(btc_data, 111)
-  const indicator = dma350x2.map((mva_350, index) => {
-    if (dma111[index].value === undefined || mva_350.value === undefined) {
-      return {
-        date: mva_350.date,
-        value: undefined,
-      }
-    }
-    return {
-      date: mva_350.date,
-      value: dma111[index].value / mva_350.value,
-    }
-  })
+  const offset = dma111.length - dma350x2.length
+  const indicator = dma350x2.map((mva_350, i) => ({
+    x: mva_350.x,
+    y: dma111[i + offset].y / mva_350.y,
+  }))
 
   Utils.setElementText('pi-cycle-info', () => {
-    const val = indicator[indicator.length - 1].value
-    if (val === undefined) {
-      return 'unknown'
-    }
+    const val = indicator[indicator.length - 1].y
     return `Indicator: ${Utils.toTwoDecimals(val)}`
   })
 
@@ -79,15 +69,11 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         mode: 'index',
         intersect: false,
       },
-      parsing: {
-        xAxisKey: 'date',
-        yAxisKey: 'value',
-      },
+      parsing: false,
       scales: {
         x: {
           type: 'time',
           time: {
-            parser: 'YYYY-MM-DD',
             tooltipFormat: 'YYYY-MM-DD',
           },
         },
@@ -108,7 +94,11 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         },
       },
       plugins: {
-        // Show tooltip for nearest x-value for all grpahs independent of y-value of mouse.
+        decimation: {
+          enabled: true,
+          algorithm: 'lttb',
+        },
+        // Show tooltip for nearest x-value for all graphs independent of y-value of mouse.
         tooltip: {
           mode: 'index',
           intersect: false,
@@ -118,8 +108,8 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
             lowerBox: {
               drawTime: 'beforeDatasetsDraw',
               type: 'box',
-              xMin: btc_data[0].date,
-              xMax: btc_data[btc_data.length - 1].date,
+              xMin: btc_data[0].x,
+              xMax: btc_data[btc_data.length - 1].x,
               yMin: 0,
               yMax: 0.35,
               yScaleID: 'y1',
@@ -129,8 +119,8 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
             upperBox: {
               drawTime: 'beforeDatasetsDraw',
               type: 'box',
-              xMin: btc_data[0].date,
-              xMax: btc_data[btc_data.length - 1].date,
+              xMin: btc_data[0].x,
+              xMax: btc_data[btc_data.length - 1].x,
               yMin: 0.95,
               yMax: 1.5,
               yScaleID: 'y1',
