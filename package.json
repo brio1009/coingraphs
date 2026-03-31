@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "parcel src/index.html",
+    "serve": "parcel src/index.html --no-cache",
     "build": "parcel build --public-url ./  src/index.html",
     "lint": "npx @biomejs/biome check .",
     "lint:fix": "npx @biomejs/biome check --write .",
