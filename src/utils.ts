@@ -6,7 +6,9 @@ export interface XYData {
 }
 
 export namespace Utils {
-  export const parseData = (arr: { date: string; value?: number }[]): XYData[] =>
+  export const parseData = (
+    arr: { date: string; value?: number }[],
+  ): XYData[] =>
     arr.map((d) => ({ x: new Date(d.date).getTime(), y: d.value ?? 0 }))
 
   export const calculateMovingAverage = (
