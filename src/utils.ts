@@ -1,36 +1,32 @@
 import type { Chart } from 'chart.js'
 
-/**
- * The model holding a date and a value for the cart.
- */
-export interface DateData {
-  date: string
-  value?: number
+export interface XYData {
+  x: number
+  y: number
 }
 
 export namespace Utils {
+  export const parseData = (arr: { date: string; value?: number }[]): XYData[] =>
+    arr.map((d) => ({ x: new Date(d.date).getTime(), y: d.value ?? 0 }))
+
   export const calculateMovingAverage = (
-    data: DateData[],
+    data: XYData[],
     window: number,
     factor = 1,
-  ): DateData[] => {
-    // Clone the input dates but set the price to undefined.
-    const out: DateData[] = Object.values(structuredClone(data)).map(
-      (entry) => {
-        return { date: entry.date, price: undefined }
-      },
-    )
+  ): XYData[] => {
     if (data.length < window || window <= 0) {
-      return out
+      return []
     }
     let sum = 0
     for (let i = 0; i < window; i++) {
-      sum += data[i].value ?? 0
+      sum += data[i].y
     }
-    out[window - 1].value = (sum / window) * factor
-    for (let i = window; i < data.length; i++) {
-      sum += (data[i].value ?? 0) - (data[i - window].value ?? 0)
-      out[i].value = (sum / window) * factor
+    const length = data.length - window + 1
+    const out = new Array<XYData>(length)
+    out[0] = { x: data[window - 1].x, y: (sum / window) * factor }
+    for (let i = 1; i < length; i++) {
+      sum += data[i + window - 1].y - data[i - 1].y
+      out[i] = { x: data[i + window - 1].x, y: (sum / window) * factor }
     }
     return out
   }
@@ -54,7 +50,7 @@ export namespace Utils {
 
   export const updateChartRange = (
     chart: Chart,
-    data: DateData[],
+    data: XYData[],
     range: '90d' | '1y' | '5y' | 'all',
   ) => {
     if (range === 'all') {
@@ -64,8 +60,8 @@ export namespace Utils {
       return
     }
 
-    const endDate = new Date(data[data.length - 1].date)
-    let startDate = new Date(data[0].date)
+    const endDate = new Date(data[data.length - 1].x)
+    let startDate = new Date(data[0].x)
     if (range === '90d') {
       startDate = new Date(endDate)
       startDate.setDate(endDate.getDate() - 90)
