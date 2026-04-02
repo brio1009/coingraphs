@@ -13,7 +13,6 @@
 
 
 ## Roadmap
-- [ ] add unified charts.ts
 - [ ] Graph colors
 - [ ] Optimize css
   - [ ] light mode
