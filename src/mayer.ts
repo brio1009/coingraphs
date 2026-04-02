@@ -97,6 +97,10 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
           type: 'logarithmic',
           display: true,
           position: 'left',
+          title: {
+            display: true,
+            text: 'USD/BTC',
+          },
         },
         y1: {
           type: 'linear',
@@ -104,6 +108,10 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
           position: 'right',
           min: 0,
           max: 15,
+          title: {
+            display: true,
+            text: 'Mayer Multiple',
+          },
           grid: {
             drawOnChartArea: false,
           },

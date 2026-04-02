@@ -15,8 +15,6 @@
 ## Roadmap
 - [ ] add unified charts.ts
 - [ ] Graph colors
-- [ ] Unit for y axis
-- [ ] y axis names
 - [ ] Optimize css
   - [ ] light mode
   - [ ] hover color for links

@@ -81,6 +81,10 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
           type: 'logarithmic',
           display: true,
           position: 'left',
+          title: {
+            display: true,
+            text: 'USD/BTC',
+          },
         },
         y1: {
           type: 'linear',
@@ -88,6 +92,10 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
           position: 'right',
           min: 0,
           max: 4,
+          title: {
+            display: true,
+            text: 'Pi Cycle Indicator',
+          },
           grid: {
             drawOnChartArea: false,
           },
