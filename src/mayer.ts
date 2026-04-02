@@ -126,6 +126,10 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         tooltip: {
           mode: 'x',
           intersect: false,
+          // Deduplicate: decimation can cause multiple points per dataset at nearby x values.
+          filter: (item, _index, items) =>
+            items.findIndex((i) => i.datasetIndex === item.datasetIndex) ===
+            _index,
         },
       },
     },
