@@ -82,7 +82,7 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
       },
       // Hovering anywhere should hover the nearest x-value independent of y-value.
       hover: {
-        mode: 'index',
+        mode: 'x',
         intersect: false,
       },
       parsing: false,
@@ -116,7 +116,7 @@ Chart.defaults.color = styles.getPropertyValue('--color-slate-400')
         },
         // Show tooltip for nearest x-value for all graphs independent of y-value of mouse.
         tooltip: {
-          mode: 'index',
+          mode: 'x',
           intersect: false,
         },
       },
