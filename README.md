@@ -17,8 +17,6 @@
 - [ ] Optimize css
   - [ ] light mode
   - [ ] hover color for links
-- [ ] Tests
-  - [ ] CI
 
 ## Attribution
 Historical data is taken from [this Kaggle dataset](https://www.kaggle.com/datasets/shiivvvaam/bitcoin-historical-data) and from [AlphaVantage](https://alphavantage.co).  
