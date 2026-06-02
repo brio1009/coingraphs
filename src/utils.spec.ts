@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import { Utils } from './utils'
 
 describe('Utils.parseData', () => {
@@ -45,6 +45,17 @@ describe('Utils.calculateMovingAverage', () => {
     const data = [{ x: 1, y: 10 }]
     expect(Utils.calculateMovingAverage(data, 0)).toEqual([])
     expect(Utils.calculateMovingAverage(data, -1)).toEqual([])
+  })
+
+  it('returns single element when data.length equals window', () => {
+    const data = [
+      { x: 1, y: 10 },
+      { x: 2, y: 20 },
+      { x: 3, y: 30 },
+    ]
+    const result = Utils.calculateMovingAverage(data, 3)
+    expect(result).toHaveLength(1)
+    expect(result[0]).toEqual({ x: 3, y: 20 })
   })
 
   it('returns data unchanged for window=1 and default factor', () => {
@@ -130,10 +141,42 @@ describe('Utils.toTwoDecimals', () => {
   it('preserves values already at two decimals', () => {
     expect(Utils.toTwoDecimals(3.14)).toBe('3.14')
   })
+
+  it('handles negative values', () => {
+    expect(Utils.toTwoDecimals(-1.5)).toBe('-1.50')
+    expect(Utils.toTwoDecimals(-0.005)).toBe('0.00')
+  })
+})
+
+describe('Utils.setElementText', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  it('sets innerText on all elements matching the class', () => {
+    document.body.innerHTML =
+      '<span class="info"></span><span class="info"></span>'
+    Utils.setElementText('info', 'hello')
+    const spans = document.getElementsByClassName('info')
+    expect((spans[0] as HTMLElement).innerText).toBe('hello')
+    expect((spans[1] as HTMLElement).innerText).toBe('hello')
+  })
+
+  it('accepts a function and uses its return value', () => {
+    document.body.innerHTML = '<span class="val"></span>'
+    Utils.setElementText('val', () => 'computed')
+    expect(
+      (document.getElementsByClassName('val')[0] as HTMLElement).innerText,
+    ).toBe('computed')
+  })
+
+  it('does nothing when no elements match the class', () => {
+    expect(() => Utils.setElementText('missing', 'text')).not.toThrow()
+  })
 })
 
 describe('Mayer Multiple calculation logic', () => {
-  it('computes ratio of price to 200DMA correctly', () => {
+  it('computes ratio of price to 200DMA correctly for flat prices', () => {
     // 200 data points with constant price 100 → 200DMA = 100 → multiple = 1.0
     const btcData = Array.from({ length: 200 }, (_, i) => ({
       x: i,
@@ -141,37 +184,37 @@ describe('Mayer Multiple calculation logic', () => {
     }))
     const dma200 = Utils.calculateMovingAverage(btcData, 200)
     const offset = btcData.length - dma200.length
-    const mayerMultiple = dma200.map((val, i) => ({
-      x: val.x,
-      y: btcData[i + offset].y / val.y,
+    const multiple = btcData[offset].y / dma200[0].y
+    expect(multiple).toBeCloseTo(1.0)
+  })
+
+  it('multiple > 1 when current price is above the 200DMA', () => {
+    // 199 points at 100 then a spike to 200: DMA ≈ 100.5, last price = 200
+    const btcData = Array.from({ length: 200 }, (_, i) => ({
+      x: i,
+      y: i < 199 ? 100 : 200,
     }))
-    expect(mayerMultiple[0].y).toBeCloseTo(1.0)
+    const dma200 = Utils.calculateMovingAverage(btcData, 200)
+    const offset = btcData.length - dma200.length
+    const multiple = btcData[offset].y / dma200[0].y
+    expect(multiple).toBeGreaterThan(1.0)
   })
 
-  it('flags oversold when multiple < 0.5', () => {
-    const multiple = 0.3
-    expect(multiple < 0.5).toBe(true)
-  })
-
-  it('flags bearish when 0.5 ≤ multiple < 1.0', () => {
-    const multiple = 0.75
-    expect(multiple >= 0.5 && multiple < 1.0).toBe(true)
-  })
-
-  it('flags bullish when 1.0 ≤ multiple < 2.0', () => {
-    const multiple = 1.5
-    expect(multiple >= 1.0 && multiple < 2.0).toBe(true)
-  })
-
-  it('flags overbought when multiple ≥ 2.0', () => {
-    const multiple = 3.0
-    expect(multiple >= 2.0).toBe(true)
+  it('multiple < 1 when current price is below the 200DMA', () => {
+    // 199 points at 100 then a drop to 1: DMA ≈ 99.5, last price = 1
+    const btcData = Array.from({ length: 200 }, (_, i) => ({
+      x: i,
+      y: i < 199 ? 100 : 1,
+    }))
+    const dma200 = Utils.calculateMovingAverage(btcData, 200)
+    const offset = btcData.length - dma200.length
+    const multiple = btcData[offset].y / dma200[0].y
+    expect(multiple).toBeLessThan(1.0)
   })
 })
 
 describe('Pi Cycle calculation logic', () => {
   it('computes 111DMA / 350DMAx2 correctly for flat prices', () => {
-    // 350 data points, constant price 100
     // 111DMA = 100, 350DMAx2 = 200 → indicator = 0.5
     const btcData = Array.from({ length: 350 }, (_, i) => ({
       x: i,
@@ -187,9 +230,21 @@ describe('Pi Cycle calculation logic', () => {
     expect(indicator[0].y).toBeCloseTo(0.5)
   })
 
-  it('indicator approaches 1.0 (market top signal) when 111DMA meets 350DMAx2', () => {
-    // When 111DMA ≈ 350DMAx2, the ratio approaches 1
-    const ratio = 200 / 200
-    expect(ratio).toBeCloseTo(1.0)
+  it('indicator > 0.5 when prices are rising (111DMA leads 350DMA)', () => {
+    // Linearly rising prices: 1, 2, ..., 350
+    // Shorter MA (111) tracks recent prices more closely than longer MA (350),
+    // so 111DMA > 350DMA and the indicator exceeds 0.5
+    const btcData = Array.from({ length: 350 }, (_, i) => ({
+      x: i,
+      y: i + 1,
+    }))
+    const dma350x2 = Utils.calculateMovingAverage(btcData, 350, 2)
+    const dma111 = Utils.calculateMovingAverage(btcData, 111)
+    const offset = dma111.length - dma350x2.length
+    const indicator = dma350x2.map((mva350, i) => ({
+      x: mva350.x,
+      y: dma111[i + offset].y / mva350.y,
+    }))
+    expect(indicator[0].y).toBeGreaterThan(0.5)
   })
 })
