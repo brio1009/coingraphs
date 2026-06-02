@@ -8,18 +8,21 @@
     "build": "parcel build --public-url ./  src/index.html",
     "lint": "npx @biomejs/biome check .",
     "lint:fix": "npx @biomejs/biome check --write .",
+    "test": "vitest run",
     "update-data": "node data/fetch_data.js"
   },
   "devDependencies": {
     "@biomejs/biome": "*",
     "@tailwindcss/postcss": "^4.2.2",
     "fs": "*",
+    "happy-dom": "^20.9.0",
     "ky": "*",
     "parcel": "*",
     "postcss": "*",
     "process": "*",
     "svgo": "*",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "vitest": "^4.1.8"
   },
   "dependencies": {
     "chart.js": "*",
