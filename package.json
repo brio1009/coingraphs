@@ -22,7 +22,7 @@
     "process": "*",
     "svgo": "*",
     "tailwindcss": "^4.2.2",
-    "vitest": "^4.1.8"
+    "vitest": "^5.0.0"
   },
   "dependencies": {
     "chart.js": "*",
