@@ -15,7 +15,7 @@
     "@biomejs/biome": "*",
     "@tailwindcss/postcss": "^4.2.2",
     "fs": "*",
-    "happy-dom": "^20.9.0",
+    "happy-dom": "^21.0.0",
     "ky": "*",
     "parcel": "*",
     "postcss": "*",
